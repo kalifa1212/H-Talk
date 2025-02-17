@@ -31,7 +31,7 @@ public class WhatappApiApplication {
         SpringApplication.run(WhatappApiApplication.class, args);
     }
     static {
-        // Charger le fichier .env
+        // Charger le fichier .env depuis le dossier local
         Dotenv dotenv = Dotenv.load();
 
         // Charger les variables dans le système d'environnement
