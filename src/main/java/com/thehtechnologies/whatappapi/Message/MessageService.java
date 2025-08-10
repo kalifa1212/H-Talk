@@ -7,6 +7,7 @@ import com.thehtechnologies.whatappapi.File.FileUtils;
 import com.thehtechnologies.whatappapi.Notification.Notification;
 import com.thehtechnologies.whatappapi.Notification.NotificationService;
 import com.thehtechnologies.whatappapi.Notification.NotificationType;
+import com.thehtechnologies.whatappapi.Security.UserPrincipal;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -62,6 +63,7 @@ public class MessageService {
 
     @Transactional
     public void setMessagesToSeen(String chatId, Authentication authentication) {
+
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("Chat not found"));
         final String recipientId = getRecipientId(chat, authentication);
@@ -79,6 +81,7 @@ public class MessageService {
     }
 
     public void uploadMediaMessage(String chatId, MultipartFile file, Authentication authentication) {
+
         Chat chat = chatRepository.findById(chatId)
                 .orElseThrow(() -> new RuntimeException("Chat not found"));
 
@@ -108,14 +111,20 @@ public class MessageService {
     }
 
     private String getSenderId(Chat chat, Authentication authentication) {
-        if (chat.getSender().getId().equals(authentication.getName())) {
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        String  CurrentUserId = userPrincipal.getId();
+
+        if (chat.getSender().getId().equals(CurrentUserId)) {
             return chat.getSender().getId();
         }
         return chat.getRecipient().getId();
     }
 
     private String getRecipientId(Chat chat, Authentication authentication) {
-        if (chat.getSender().getId().equals(authentication.getName())) {
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        String  CurrentUserId = userPrincipal.getId();
+
+        if (chat.getSender().getId().equals(CurrentUserId)) {
             return chat.getRecipient().getId();
         }
         return chat.getSender().getId();

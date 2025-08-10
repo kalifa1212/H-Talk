@@ -1,6 +1,7 @@
 package com.thehtechnologies.whatappapi.Message;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/messages")
+@SecurityRequirement(name = "Bearer Authentication")
 @RequiredArgsConstructor
 @Tag(name = "Message")
 public class MessageController {

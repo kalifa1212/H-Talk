@@ -9,22 +9,28 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @SpringBootApplication
 @EnableJpaAuditing
 @SecurityScheme(
-        name = "keycloak",
-        type = SecuritySchemeType.OAUTH2,
+        name = "Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
         bearerFormat = "JWT",
-        scheme = "bearer",
-        in = SecuritySchemeIn.HEADER,
-        flows = @OAuthFlows(
-                password = @OAuthFlow(
-                        authorizationUrl = "http://localhost:9090/realms/messaging-api/protocol/openid-connect/auth",
-                        tokenUrl = "http://localhost:9090/realms/messaging-api/protocol/openid-connect/token"
-                )
-        )
+        scheme = "bearer"
+//        name = "keycloak",
+//        type = SecuritySchemeType.OAUTH2,
+//        bearerFormat = "JWT",
+//        scheme = "bearer",
+//        in = SecuritySchemeIn.HEADER,
+//        flows = @OAuthFlows(
+//                password = @OAuthFlow(
+//                        authorizationUrl = "http://localhost:9090/realms/messaging-api/protocol/openid-connect/auth",
+//                        tokenUrl = "http://localhost:9090/realms/messaging-api/protocol/openid-connect/token"
+//                )
+//        )
 )
+@EnableWebMvc
 public class WhatappApiApplication {
 
     public static void main(String[] args) {

@@ -14,11 +14,20 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     enabled: false
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: http://localhost:9090/realms/whatsapp-clone
+    # static configuration
+  web:
+    resources:
+      static-locations: classpath:/static/,classpath:/public/
+      cache:
+        preriod: 3600
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  #  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: http://localhost:9090/realms/whatsapp-clone
   servlet:
     multipart:
       max-file-size: 50MB
@@ -31,3 +40,8 @@ application:
   file:
     uploads:
       media-output-path: ./uploads
+server:
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json
+    min-response-size: 1024

@@ -1,5 +1,6 @@
 package com.thehtechnologies.whatappapi.Chat;
 
+import com.thehtechnologies.whatappapi.Security.UserPrincipal;
 import com.thehtechnologies.whatappapi.User.User;
 import com.thehtechnologies.whatappapi.User.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,9 +24,14 @@ public class ChatService {
 
     @Transactional(readOnly = true)
     public List<ChatResponse> getChatsByReceiverId(Authentication currentUser) {
-       // log.info(String.valueOf(currentUser));
+        UserPrincipal userPrincipal = (UserPrincipal) currentUser.getPrincipal();
+        String  CurrentUserId = userPrincipal.getId();
+
         final String userId = currentUser.getName();
-        return chatRepository.findChatsBySenderId(userId)
+//        Optional<User> gettingId=userRepository.findByEmail(userId);
+//        log.info(currentUser.getName(),"id-->",gettingId.get().getId());
+//        //return chatRepository.findChatsBySenderId(userId)
+        return chatRepository.findChatsBySenderId(CurrentUserId)
                 .stream()
                 .map(c -> mapper.toChatResponse(c, userId))
                 .toList();

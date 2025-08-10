@@ -1,6 +1,7 @@
 package com.thehtechnologies.whatappapi.Chat;
 
 import com.thehtechnologies.whatappapi.Common.StringResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/chats")
+@SecurityRequirement(name = "Bearer Authentication")
 @RequiredArgsConstructor
 @Tag(name = "Chat")
 public class ChatController {
