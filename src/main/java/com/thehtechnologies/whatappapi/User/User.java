@@ -1,5 +1,6 @@
 package com.thehtechnologies.whatappapi.User;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thehtechnologies.whatappapi.Chat.Chat;
 import com.thehtechnologies.whatappapi.Common.BaseAuditingEntity;
 import jakarta.persistence.*;
@@ -40,8 +41,11 @@ public class User extends BaseAuditingEntity {
 
     private String firstName;
     private String lastName;
+    private String photoUrl;
     private String email;
     private  String password;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime lastSeen;
 
     @OneToMany(mappedBy = "sender")

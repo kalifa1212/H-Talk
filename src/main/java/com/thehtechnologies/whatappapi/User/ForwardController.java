@@ -3,13 +3,14 @@ package com.thehtechnologies.whatappapi.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @Slf4j
 public class ForwardController {
 
-    @GetMapping(value =  "/index")
+    @RequestMapping("/index")
     public String forward(HttpServletRequest request) {
         String uri = request.getRequestURI();
 
@@ -21,6 +22,7 @@ public class ForwardController {
         }
         log.error("redirecting");
 
+        // Forward vers le fichier statique situé dans /static/
         return "forward:/index.html";
     }
 }

@@ -1,5 +1,6 @@
 package com.thehtechnologies.whatappapi.User;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,8 @@ public class UserResponse {
     private String firstName;
     private String lastName;
     private String email;
+    private String photoUrl;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime lastSeen;
     private boolean isOnline;
 }

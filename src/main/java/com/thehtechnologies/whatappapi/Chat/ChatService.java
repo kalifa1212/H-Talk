@@ -27,13 +27,11 @@ public class ChatService {
         UserPrincipal userPrincipal = (UserPrincipal) currentUser.getPrincipal();
         String  CurrentUserId = userPrincipal.getId();
 
-        final String userId = currentUser.getName();
-//        Optional<User> gettingId=userRepository.findByEmail(userId);
-//        log.info(currentUser.getName(),"id-->",gettingId.get().getId());
-//        //return chatRepository.findChatsBySenderId(userId)
+       // TODO fixed chat name  by removing userId
+        //  final String userId = currentUser.getName();
         return chatRepository.findChatsBySenderId(CurrentUserId)
                 .stream()
-                .map(c -> mapper.toChatResponse(c, userId))
+                .map(c -> mapper.toChatResponse(c, CurrentUserId))
                 .toList();
     }
 

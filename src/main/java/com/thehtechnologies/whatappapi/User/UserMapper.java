@@ -37,6 +37,7 @@ public class UserMapper {
                 .id(user.getId())
                 .firstName(user.getFirstName())
                 .lastName(user.getLastName())
+                .photoUrl(user.getPhotoUrl())
                 .email(user.getEmail())
                 .lastSeen(user.getLastSeen())
                 .isOnline(user.isUserOnline())

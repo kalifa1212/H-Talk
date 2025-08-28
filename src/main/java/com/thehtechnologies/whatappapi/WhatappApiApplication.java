@@ -30,7 +30,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 //                )
 //        )
 )
-@EnableWebMvc
+//@EnableWebMvc
 public class WhatappApiApplication {
 
     public static void main(String[] args) {

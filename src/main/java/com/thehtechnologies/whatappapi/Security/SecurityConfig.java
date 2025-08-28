@@ -3,6 +3,7 @@ package com.thehtechnologies.whatappapi.Security;
 
 import com.thehtechnologies.whatappapi.Interceptor.UserSynchronizerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -37,18 +38,18 @@ public class SecurityConfig {
     @Autowired
     private UserSynchronizerFilter userSynchronizerFilter;
 // cors config
-@Bean
-public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration config = new CorsConfiguration();
-    config.setAllowCredentials(true); // Autorise cookies / auth headers
-    config.setAllowedOriginPatterns(Collections.singletonList("*")); // Utilise des patterns, pas `*`
-    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-    config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "Origin"));
-
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
-    return source;
-}
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true); // Autorise cookies / auth headers
+//        config.setAllowedOriginPatterns(Collections.singletonList("*")); // Utilise des patterns, pas `*`
+//        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+//        config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Accept", "Origin"));
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
 
 //    end cors
     @Bean
@@ -68,8 +69,16 @@ public CorsConfigurationSource corsConfigurationSource() {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(req ->
                         req
+                                // Pages publiques
+//                                .requestMatchers(
+//                                        "/assets/**", "/static/**", "/public/**", "/webjars/**","/media/**",
+//                                        "/", "/index", "/index.html", "/favicon.ico","/media/**"
+////                                        "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.svg"
+//                                ).permitAll()
+//
                                 .requestMatchers("/auth/**",
-                                "/api/v1/users/save",
+                                        "/api/v1/users/image/display/{identifiant}",
+                                        "/api/v1/users/save",
                                         "/api/v1/users/login",
                                         "/api/v1/users/save",
                                         "/v2/api-docs",
@@ -80,13 +89,16 @@ public CorsConfigurationSource corsConfigurationSource() {
                                         "/configuration/ui",
                                         "/configuration/security",
                                         "/swagger-ui/**",
-                                        "/webjars/**",
                                         "/swagger-ui.html",
                                         "/ws/**",
-                                        //TODO allow static
-                                       "/browser/**", "/static/**", "/login", "/public/**"
+                                        "/login",
+                                        //TODO static
+                                        "/assets/**", "/static/**", "/public/**", "/webjars/**","/media/**",
+                                        "/", "/index", "/index.html", "/favicon.ico",
+                                        "/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.svg"
                                 )
                                 .permitAll()
+                                .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session->
@@ -104,21 +116,25 @@ public CorsConfigurationSource corsConfigurationSource() {
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
+        //config.setAllowCredentials(false);
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-        config.setAllowedHeaders(Arrays.asList(
-                HttpHeaders.ORIGIN,
-                HttpHeaders.CONTENT_TYPE,
-                HttpHeaders.ACCEPT,
-                HttpHeaders.AUTHORIZATION
-        ));
-        config.setAllowedMethods(Arrays.asList(
-                "GET",
-                "POST",
-                "DELETE",
-                "PUT",
-                "PATCH"
-        ));
+      //  config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        config.addAllowedOriginPattern("*"); // compatible avec allow credentials
+//        config.setAllowedHeaders(Arrays.asList(
+//                HttpHeaders.ORIGIN,
+//                HttpHeaders.CONTENT_TYPE,
+//                HttpHeaders.ACCEPT,
+//                HttpHeaders.AUTHORIZATION
+//        ));
+//        config.setAllowedMethods(Arrays.asList(
+//                "GET",
+//                "POST",
+//                "DELETE",
+//                "PUT",
+//                "PATCH"
+//        ));
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
 

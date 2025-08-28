@@ -9,9 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import static java.io.File.separator;
 import static java.lang.System.currentTimeMillis;
@@ -31,7 +33,21 @@ public class FileService {
         final String fileUploadSubPath = "users" + separator + userId;
         return uploadFile(sourceFile, fileUploadSubPath);
     }
-
+    //TODO user fileuploadpaht to dir
+    public  void MirasaveFile( String FileName, MultipartFile multipartFile) throws IOException{
+        Path uploadDir = Paths.get(fileUploadPath+"/profile/image");
+        if(!Files.exists(uploadDir)) {
+            Files.createDirectories(uploadDir);
+            log.info("folder create");
+        }
+        try (InputStream inputStream=multipartFile.getInputStream()){
+            Path filePath = uploadDir.resolve(FileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            log.info("file save");
+        }catch (IOException ioe) {
+            throw new IOException("Impossible d'enregistrer l'image:"+FileName,ioe);
+        }
+    }
     private String uploadFile(
             @Nonnull MultipartFile sourceFile,
             @Nonnull String fileUploadSubPath

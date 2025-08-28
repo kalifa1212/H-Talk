@@ -1,5 +1,6 @@
 package com.thehtechnologies.whatappapi.Chat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ public class ChatResponse {
     private String name;
     private long unreadCount;
     private String lastMessage;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime lastMessageTime;
     private boolean isRecipientOnline;
     private String senderId;

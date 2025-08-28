@@ -8,6 +8,8 @@ import com.thehtechnologies.whatappapi.Notification.Notification;
 import com.thehtechnologies.whatappapi.Notification.NotificationService;
 import com.thehtechnologies.whatappapi.Notification.NotificationType;
 import com.thehtechnologies.whatappapi.Security.UserPrincipal;
+import com.thehtechnologies.whatappapi.User.UserRepository;
+import com.thehtechnologies.whatappapi.User.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,6 +25,7 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final ChatRepository chatRepository;
+    private final UserService userService;
     private final MessageMapper mapper;
     private final NotificationService notificationService;
     private final FileService fileService;
@@ -40,7 +43,8 @@ public class MessageService {
         message.setState(MessageState.SENT);
 
         messageRepository.save(message);
-
+        userService.lastSeen(message.getSenderId());
+        userService.lastSeen(message.getReceiverId());
         Notification notification = Notification.builder()
                 .chatId(chat.getId())
                 .messageType(messageRequest.getType())
@@ -87,8 +91,9 @@ public class MessageService {
 
         final String senderId = getSenderId(chat, authentication);
         final String receiverId = getRecipientId(chat, authentication);
-
+        //TODO review saveMedia message
         final String filePath = fileService.saveFile(file, senderId);
+
         Message message = new Message();
         message.setReceiverId(receiverId);
         message.setSenderId(senderId);

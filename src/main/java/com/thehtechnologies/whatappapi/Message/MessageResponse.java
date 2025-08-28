@@ -1,5 +1,6 @@
 package com.thehtechnologies.whatappapi.Message;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,6 +22,7 @@ public class MessageResponse {
     private MessageState state;
     private String senderId;
     private String receiverId;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
     private byte[] media;
 }
