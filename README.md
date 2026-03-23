@@ -1,7 +1,7 @@
 
-# H-Talk - API de Messagerie Instantanée
+# H-Talk-API est une API de Messagerie Instantanée
 
-**H-Talk** est une API de messagerie instantanée développée par ***H technologies*** en **Java Spring Boot** permettant la communication en temps réel avec des amis et d'autres utilisateurs. Elle utilise **Keycloak** pour la gestion de la sécurité et de l'authentification, **PostgreSQL** comme base de données, et **WebSocket** pour une communication rapide et bidirectionnelle.
+**H-Talk-API** est une API de messagerie instantanée développée par ***HForge*** en **Java Spring Boot** permettant la communication en temps réel avec des amis et d'autres utilisateurs. Elle utilise **Keycloak** pour la gestion de la sécurité et de l'authentification, **PostgreSQL** comme base de données, et **WebSocket** pour une communication rapide et bidirectionnelle.
 
 ## Prérequis
 
@@ -133,8 +133,8 @@ Merci de testé l'application.
 
 ## Licence
 
-Ce projet est sous licence [MIT](LICENSE.md).
+Ce projet est d'utilisation et de modification
 
 ## Auteurs
 
-- [Kalifa1212 GitHub](https://github.com/kalifa1212/)
+- [Kalifa1212 GitHub](https://github.com/kalifa1212/) HForge
